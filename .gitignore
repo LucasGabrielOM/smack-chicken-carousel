@@ -1,0 +1,8 @@
+node_modules
+*.local
+.DS_Store
+*.py
+make-files.js
+fix_data.py
+update_mobile.py
+fix.py
