@@ -102,17 +102,18 @@ export function CoverFlowCarousel({
   items = defaultDishes,
   sectionLabel = "BEST SELLERS",
   autoplay = true,
-  autoplayDelay = 3500,
+  autoplayDelay = 3200,
   className = "",
   onCtaClick,
 }: CoverFlowCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== "undefined" ? window.innerWidth : 1024
   );
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
+  const pauseTimerRef = useRef<any>(null);
   const total = items.length;
 
   useEffect(() => {
@@ -136,16 +137,34 @@ export function CoverFlowCarousel({
     setCurrentIndex(idx % total);
   };
 
+  // Autoplay loop
   useEffect(() => {
-    if (!autoplay || isHovered || total <= 1) return;
-    const interval = setInterval(nextSlide, autoplayDelay);
+    if (!autoplay || isPaused || total <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % total);
+    }, autoplayDelay);
     return () => clearInterval(interval);
-  }, [autoplay, autoplayDelay, isHovered, nextSlide, total]);
+  }, [autoplay, autoplayDelay, isPaused, total]);
+
+  // Pause temporarily on interaction, then automatically resume
+  const handleUserInteraction = () => {
+    if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+    setIsPaused(true);
+    pauseTimerRef.current = setTimeout(() => {
+      setIsPaused(false);
+    }, 4000);
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") prevSlide();
-      if (e.key === "ArrowRight") nextSlide();
+      if (e.key === "ArrowLeft") {
+        prevSlide();
+        handleUserInteraction();
+      }
+      if (e.key === "ArrowRight") {
+        nextSlide();
+        handleUserInteraction();
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -154,6 +173,7 @@ export function CoverFlowCarousel({
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
+    setIsPaused(true);
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
@@ -163,6 +183,8 @@ export function CoverFlowCarousel({
       if (diffX < 0) nextSlide();
       else prevSlide();
     }
+    // Resume autoplay 3s after user finishes touching
+    handleUserInteraction();
   };
 
   if (!items || items.length === 0) return null;
@@ -184,8 +206,8 @@ export function CoverFlowCarousel({
         color: "#ffffff",
         fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
       }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
@@ -277,7 +299,12 @@ export function CoverFlowCarousel({
             return (
               <div
                 key={idx}
-                onClick={() => !isCenter && goToSlide(idx)}
+                onClick={() => {
+                  if (!isCenter) {
+                    goToSlide(idx);
+                    handleUserInteraction();
+                  }
+                }}
                 style={{
                   position: "absolute",
                   width: `${cardWidth}px`,
@@ -466,7 +493,10 @@ export function CoverFlowCarousel({
 
         {/* Navigation Arrows */}
         <button
-          onClick={prevSlide}
+          onClick={() => {
+            prevSlide();
+            handleUserInteraction();
+          }}
           aria-label="Previous dish"
           style={{
             position: "absolute",
@@ -493,7 +523,10 @@ export function CoverFlowCarousel({
         </button>
 
         <button
-          onClick={nextSlide}
+          onClick={() => {
+            nextSlide();
+            handleUserInteraction();
+          }}
           aria-label="Next dish"
           style={{
             position: "absolute",
@@ -524,7 +557,10 @@ export function CoverFlowCarousel({
           {items.map((_, idx) => (
             <button
               key={idx}
-              onClick={() => goToSlide(idx)}
+              onClick={() => {
+                goToSlide(idx);
+                handleUserInteraction();
+              }}
               aria-label={`Go to slide ${idx + 1}`}
               style={{
                 height: "7px",
