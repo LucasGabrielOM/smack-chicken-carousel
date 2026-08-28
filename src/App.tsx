@@ -6,7 +6,7 @@ export default function App() {
       <CoverFlowCarousel 
         sectionLabel="BEST SELLERS"
         autoplay={true}
-        autoplayDelay={3500}
+        autoplayDelay={2200}
       />
     </div>
   );
