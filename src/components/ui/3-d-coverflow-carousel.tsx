@@ -39,13 +39,15 @@ export interface CoverFlowCarouselProps {
   onCtaClick?: (item: CarouselItem) => void;
 }
 
+const BASE = ((import.meta as any).env?.BASE_URL || "").replace(/\/$/, "");
+
 export const defaultDishes: CarouselItem[] = [
   {
     tag: "#Signature",
     titleLine1: "SMACK FRESH",
     titleLine2: "- BURGER GOURMET",
     desc: "Tiras crocantes empanadas, queijo derretido, alface roxa e tomate no brioche",
-    img: "./images/smack/1-smack-fresh-burger.jpg",
+    img: `${BASE}/images/smack/1-smack-fresh-burger.jpg`,
     ctaText: "VIEW MENU",
     ctaUrl: "https://www.ifood.com.br/delivery/florianopolis-sc/smack-chicken-frango-frito-no-balde-estreito/93484d61-4553-4caf-b136-d1a0f5e73ecf?utm_medium=share",
   },
@@ -54,7 +56,7 @@ export const defaultDishes: CarouselItem[] = [
     titleLine1: "BAGUETE POWER",
     titleLine2: "- BACON E QUEIJO",
     desc: "Frango crocante em tiras douradas, cascata de queijo, bacon e batatas fritas",
-    img: "./images/smack/2-smack-baguete-power.jpg",
+    img: `${BASE}/images/smack/2-smack-baguete-power.jpg`,
     ctaText: "VIEW MENU",
     ctaUrl: "https://www.ifood.com.br/delivery/florianopolis-sc/smack-chicken-frango-frito-no-balde-estreito/93484d61-4553-4caf-b136-d1a0f5e73ecf?utm_medium=share",
   },
@@ -63,7 +65,7 @@ export const defaultDishes: CarouselItem[] = [
     titleLine1: "BALDE SMACK G",
     titleLine2: "- 4 MOLHOS E COCA",
     desc: "800g de puro frango ultracrocante, 4 potinhos de molhos da casa e Coca gelada",
-    img: "./images/smack/3-smack-balde-combo.jpg",
+    img: `${BASE}/images/smack/3-smack-balde-combo.jpg`,
     ctaText: "VIEW MENU",
     ctaUrl: "https://www.ifood.com.br/delivery/florianopolis-sc/smack-chicken-frango-frito-no-balde-estreito/93484d61-4553-4caf-b136-d1a0f5e73ecf?utm_medium=share",
   },
@@ -72,7 +74,7 @@ export const defaultDishes: CarouselItem[] = [
     titleLine1: "TIRAS SUPREME",
     titleLine2: "- CROCANTE REAL",
     desc: "100% peito de frango selecionado, frito na hora com tempero artesanal",
-    img: "./images/smack/4-smack-tiras-supreme.jpg",
+    img: `${BASE}/images/smack/4-smack-tiras-supreme.jpg`,
     ctaText: "VIEW MENU",
     ctaUrl: "https://www.ifood.com.br/delivery/florianopolis-sc/smack-chicken-frango-frito-no-balde-estreito/93484d61-4553-4caf-b136-d1a0f5e73ecf?utm_medium=share",
   },
@@ -81,7 +83,7 @@ export const defaultDishes: CarouselItem[] = [
     titleLine1: "MARMITA SMACK",
     titleLine2: "- ALMOCO COMPLETO",
     desc: "Frango frito crocante, arroz branco soltinho, feijao caseiro e batatas fritas",
-    img: "./images/smack/5-smack-marmita-executiva.png",
+    img: `${BASE}/images/smack/5-smack-marmita-executiva.png`,
     ctaText: "VIEW MENU",
     ctaUrl: "https://www.ifood.com.br/delivery/florianopolis-sc/smack-chicken-frango-frito-no-balde-estreito/93484d61-4553-4caf-b136-d1a0f5e73ecf?utm_medium=share",
   },
@@ -90,7 +92,7 @@ export const defaultDishes: CarouselItem[] = [
     titleLine1: "SMACK KIDS",
     titleLine2: "- BATATAS SMILE",
     desc: "Pao brioche fofinho, frango crocante, cheddar e batatinhas smile douradas",
-    img: "./images/smack/6-smack-kids-smile.jpg",
+    img: `${BASE}/images/smack/6-smack-kids-smile.jpg`,
     ctaText: "VIEW MENU",
     ctaUrl: "https://www.ifood.com.br/delivery/florianopolis-sc/smack-chicken-frango-frito-no-balde-estreito/93484d61-4553-4caf-b136-d1a0f5e73ecf?utm_medium=share",
   },
