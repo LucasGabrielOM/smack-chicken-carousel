@@ -14,11 +14,6 @@ const ChevronRightIcon = () => (
   </svg>
 );
 
-const ArrowRightIcon = () => (
-  <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-  </svg>
-);
 
 export interface CarouselItem {
   tag?: string;
@@ -104,7 +99,6 @@ export function CoverFlowCarousel({
   autoplay = true,
   autoplayDelay = 2200,
   className = "",
-  onCtaClick,
 }: CoverFlowCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [windowWidth, setWindowWidth] = useState(
@@ -426,38 +420,7 @@ export function CoverFlowCarousel({
                       </p>
                     )}
 
-                    <a
-                      href={item.ctaUrl || "#"}
-                      onClick={(e) => {
-                        if (onCtaClick) {
-                          e.preventDefault();
-                          onCtaClick(item);
-                        }
-                      }}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        padding: isMobile ? "6px 15px" : "7px 18px",
-                        borderRadius: "9999px",
-                        background: "linear-gradient(135deg, #c5a880 0%, #a48256 100%)",
-                        color: "#110d0c",
-                        fontSize: isMobile ? "0.68rem" : "0.72rem",
-                        fontWeight: 800,
-                        letterSpacing: "0.12em",
-                        textTransform: "uppercase",
-                        textDecoration: "none",
-                        boxShadow: "0 4px 14px rgba(0,0,0,0.4), 0 0 15px rgba(197,168,128,0.3)",
-                        cursor: "pointer",
-                        transition: "transform 200ms ease, box-shadow 200ms ease",
-                      }}
-                    >
-                      <span>{item.ctaText || "VIEW MENU"}</span>
-                      <ArrowRightIcon />
-                    </a>
-                  </div>
+                    </div>
                 </div>
               </div>
             );
